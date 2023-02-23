@@ -1,12 +1,16 @@
 import "./css/App.css"
-import Header from "./Header"
+import {useRef} from "react";
+import Header from "./components/Header";
+
 
 function App() {
-  return (
-    <div className="App">
-      <Header/>
-    </div>
-  );
+    const dropBlock = useRef(null);
+
+    return (
+        <div className="App">
+            <Header/>
+        </div>
+    );
 }
 
 export default App;
