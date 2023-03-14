@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public class PersonService {
-    private PersonRepository repository;
+    private final PersonRepository repository;
 
     @Autowired
     public PersonService(PersonRepository repository) {

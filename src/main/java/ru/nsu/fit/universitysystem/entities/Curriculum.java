@@ -9,9 +9,9 @@ import java.util.Objects;
 @Table(name = "curriculum", schema = "public")
 public class Curriculum {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
     @Column(name = "lecture_hours")

@@ -1,17 +1,22 @@
 package ru.nsu.fit.universitysystem.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Collection;
 
 @Entity
 @Table(name = "faculty", schema = "public")
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Group> groups;
+
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Department> departments;
 
     public Faculty() {}
 
@@ -33,5 +38,9 @@ public class Faculty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<Group> getGroups() {
+        return groups;
     }
 }

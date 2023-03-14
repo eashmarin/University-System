@@ -7,9 +7,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "person", schema = "public")
+@Inheritance (strategy = InheritanceType.JOINED)
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String gender;

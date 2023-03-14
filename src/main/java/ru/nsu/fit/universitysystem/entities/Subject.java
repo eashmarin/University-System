@@ -2,20 +2,27 @@ package ru.nsu.fit.universitysystem.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "subject", schema = "public")
 public class Subject {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @Column(name = "control_form")
     private String controlForm;
 
-    @OneToOne(optional = false, mappedBy = "subject")
+    @OneToOne(mappedBy = "subject")
     private Curriculum curriculum;
+
+    @OneToMany(mappedBy = "subject")
+    private Collection<RecordsBook> recordsBooks;
+
+    @OneToMany(mappedBy = "subject")
+    private Collection<Class> classes;
 
     public Subject() {}
 
