@@ -4,18 +4,19 @@ import Container from "react-bootstrap/Container";
 import Separator from "./Separator";
 import GroupService from "../API/GroupService"
 import StudentTable from "./StudentTable";
+import {useFetching} from "../hooks/useFetching";
+import Spinner from "react-bootstrap/Spinner";
 
 function GroupButtonList(props) {
     const [radioValue, setRadioValue] = useState('1');
     const [students, setStudents] = useState(null);
+    const [fetchStudents, areStudentsLoading] = useFetching(async () => {
+        const groupList = await GroupService.getGroup(radioValue);
+        setStudents(groupList);
+    })
 
     useEffect(() => {
-        async function updateStudents()  {
-            const groupList = await GroupService.getGroup(radioValue);
-            setStudents(groupList);
-            console.log(students);
-        }
-        updateStudents();
+        fetchStudents();
     }, [radioValue]);
 
     function getGroups(course) {
@@ -51,7 +52,14 @@ function GroupButtonList(props) {
                     </> : null}
                 </Container>)
             })}
-            <StudentTable students={students}></StudentTable>
+            {areStudentsLoading ?
+                <div className="d-flex justify-content-center">
+                    <Spinner/>
+                </div>
+                :
+                <StudentTable students={students}></StudentTable>
+            }
+
         </>
     );
 }

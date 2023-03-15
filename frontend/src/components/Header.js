@@ -11,8 +11,8 @@ function Header(props) {
         <Navbar className="py-3" variant="dark" bg="light" expand="sm">
             <Container >
                 <NavDropdown title="Students" variant="light">
-                    <Dropdown.Item href="/students">1</Dropdown.Item>
-                    <Dropdown.Item>2</Dropdown.Item>
+                    <Dropdown.Item href="/students">List</Dropdown.Item>
+                    <Dropdown.Item href="/students/new">New</Dropdown.Item>
                     <Dropdown.Item>3</Dropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Teachers" variant="light">
