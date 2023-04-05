@@ -1,10 +1,7 @@
 package ru.nsu.fit.universitysystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.nsu.fit.universitysystem.entities.Group;
 import ru.nsu.fit.universitysystem.entities.Student;
 import ru.nsu.fit.universitysystem.services.GroupService;
@@ -26,6 +23,13 @@ public class GroupController {
     @GetMapping
     public Iterable<Group> getAll() {
         return service.getAll();
+    }
+
+    @PostMapping
+    public Group add(@RequestBody Group group) {
+        System.out.println(group.getName());
+        System.out.println(group.getFaculty());
+        return service.add(group);
     }
 
     @GetMapping("/{id}")

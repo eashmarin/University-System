@@ -1,11 +1,12 @@
 import "./css/App.css"
-import {useRef} from "react";
+import "./css/custom.css"
 import Header from "./components/Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import StudentTable from "./components/StudentTable";
-import FacultyAccordionItem from "./components/FacultyAccordionItem";
 import FacultiesList from "./components/FacultiesList";
-import StudentForm from "./components/StudentForm";
+import NewStudentForm from "./components/form/NewStudentForm";
+import NewGroupForm from "./components/form/NewGroupForm";
+import React from "react";
+import EditStudentForm from "./components/form/EditStudentForm";
 
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
             </div>
             <Routes>
                 <Route path="/students" element={<FacultiesList/>}/>
-                <Route path="/students/new" element={<StudentForm/>}/>
+                <Route path="/students/new" element={<NewStudentForm/>}/>
+                <Route path="/students/edit" element={<EditStudentForm/>}/>
+                <Route path="/groups/new" element={<NewGroupForm/>}/>
             </Routes>
         </BrowserRouter>
     );

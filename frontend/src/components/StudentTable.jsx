@@ -1,6 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import Container from "react-bootstrap/Container";
 import StudentList from "./StudentList";
+import React from "react";
 
 function StudentTable(props) {
     /*const headerStyle = () => {
@@ -16,7 +17,8 @@ function StudentTable(props) {
                         <tr>
                             <th>Name</th>
                             <th>Gender</th>
-                            <th>Group</th>
+                            <th>Birthday</th>
+                            <th>Children number</th>
                             <th>Education level</th>
                             <th>Scholarship</th>
                         </tr>

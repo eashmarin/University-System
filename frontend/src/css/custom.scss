@@ -1,3 +1,7 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
 body {
   margin: 0;
 }
@@ -38,4 +42,14 @@ body {
   font-family: "JetBrains Mono Light", monospace;
   font-size: 20px;
   background-color: $body-bg;
+}
+
+.custom-form {
+  @extend .w-25;
+  @extend .m-auto;
+  @extend .mt-3;
+  @extend .border;
+  @extend .rounded-3;
+  @extend .position-absolute;
+  background-color: #f5f5f5;
 }

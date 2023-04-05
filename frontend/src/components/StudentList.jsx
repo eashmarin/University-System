@@ -6,7 +6,8 @@ function StudentList(props) {
                         <tr key={student.id}>
                             <td>{student.name}</td>
                             <td>{student.gender}</td>
-                            <td>{student.group.name}</td>
+                            <td>{new Date(student.birthDate).toISOString().slice(0, 10)}</td>
+                            <td>{student.childNum}</td>
                             <td>{student.educationLevel}</td>
                             <td>{student.scholarship}</td>
                         </tr>

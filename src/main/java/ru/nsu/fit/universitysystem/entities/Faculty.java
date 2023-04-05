@@ -1,5 +1,6 @@
 package ru.nsu.fit.universitysystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -12,6 +13,7 @@ public class Faculty {
     private Long id;
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "faculty")
     private Collection<Group> groups;
 
@@ -19,6 +21,10 @@ public class Faculty {
     private Collection<Department> departments;
 
     public Faculty() {}
+
+    public Faculty(Long id) {
+        this.id = id;
+    }
 
     public Faculty(String name) {
         this.name = name;

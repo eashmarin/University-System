@@ -1,5 +1,5 @@
 import React from "react";
-import {Accordion, Button} from "react-bootstrap";
+import {Accordion} from "react-bootstrap";
 import GroupButtonList from "./GroupButtonList";
 
 function FacultyAccordionItem(props) {

@@ -29,7 +29,7 @@ public class Teacher extends Person {
     }
 
     public Teacher(String name, String gender, Date birthDate, Integer childNum, Department department, String post, BigDecimal salary) {
-        super(name, gender, birthDate, childNum);
+        super(login, password, name, gender, birthDate, childNum, role);
         this.department = department;
         this.post = post;
         this.salary = salary;

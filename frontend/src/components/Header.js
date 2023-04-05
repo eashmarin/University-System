@@ -1,19 +1,18 @@
 import React from "react";
-import NavBar from "./NavBar";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 
-function Header(props) {
+function Header() {
     return (
         <Navbar className="py-3" variant="dark" bg="light" expand="sm">
             <Container >
                 <NavDropdown title="Students" variant="light">
                     <Dropdown.Item href="/students">List</Dropdown.Item>
-                    <Dropdown.Item href="/students/new">New</Dropdown.Item>
-                    <Dropdown.Item>3</Dropdown.Item>
+                    <Dropdown.Item href="/students/new">New Student</Dropdown.Item>
+                    <Dropdown.Item href="/students/edit">Edit Student</Dropdown.Item>
+                    <Dropdown.Item href="/groups/new">New Group</Dropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Teachers" variant="light">
                     <Dropdown.Item>1</Dropdown.Item>

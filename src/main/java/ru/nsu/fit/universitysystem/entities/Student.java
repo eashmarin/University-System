@@ -1,7 +1,7 @@
 package ru.nsu.fit.universitysystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import ru.nsu.fit.universitysystem.security.Role;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "student", schema = "public")
 @PrimaryKeyJoinColumn(name = "person_id")
 public class Student extends Person {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
     @Column(name = "education_level")
@@ -27,8 +27,8 @@ public class Student extends Person {
     public Student() {
     }
 
-    public Student(String name, String gender, Date birthDate, Integer childNum, Group group, String educationLevel, BigDecimal scholarship) {
-        super(name, gender, birthDate, childNum);
+    public Student(String login, String password, String name, String gender, Date birthDate, Integer childNum, Group group, String educationLevel, BigDecimal scholarship, Role role) {
+        super(login, password, name, gender, birthDate, childNum, role);
         this.group = group;
         this.educationLevel = educationLevel;
         this.scholarship = scholarship;
@@ -56,5 +56,16 @@ public class Student extends Person {
 
     public void setScholarship(BigDecimal scholarship) {
         this.scholarship = scholarship;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "group=" + group +
+                ", educationLevel='" + educationLevel + '\'' +
+                ", scholarship=" + scholarship +
+                ", recordsBooks=" + recordsBooks +
+                ", graduateWork=" + graduateWork +
+                '}';
     }
 }

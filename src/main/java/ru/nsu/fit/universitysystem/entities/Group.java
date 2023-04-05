@@ -1,6 +1,8 @@
 package ru.nsu.fit.universitysystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -11,13 +13,17 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
     private String name;
+
     private Integer course;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private Collection<Student> students;
 
     @OneToMany(mappedBy = "group")
@@ -40,7 +46,6 @@ public class Group {
         this.id = id;
     }
 
-    @JsonIgnore
     public Faculty getFaculty() {
         return faculty;
     }

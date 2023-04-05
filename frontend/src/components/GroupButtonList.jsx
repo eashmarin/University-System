@@ -8,10 +8,10 @@ import {useFetching} from "../hooks/useFetching";
 import Spinner from "react-bootstrap/Spinner";
 
 function GroupButtonList(props) {
-    const [radioValue, setRadioValue] = useState('1');
+    const [radioValue, setRadioValue] = useState(props.groups[0] ? props.groups[0].id : null);
     const [students, setStudents] = useState(null);
     const [fetchStudents, areStudentsLoading] = useFetching(async () => {
-        const groupList = await GroupService.getGroup(radioValue);
+        const groupList = await GroupService.getGroupList(radioValue);
         setStudents(groupList);
     })
 
