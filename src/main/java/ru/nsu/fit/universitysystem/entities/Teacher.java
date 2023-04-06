@@ -1,6 +1,7 @@
 package ru.nsu.fit.universitysystem.entities;
 
 import jakarta.persistence.*;
+import ru.nsu.fit.universitysystem.security.Role;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -28,7 +29,7 @@ public class Teacher extends Person {
     public Teacher() {
     }
 
-    public Teacher(String name, String gender, Date birthDate, Integer childNum, Department department, String post, BigDecimal salary) {
+    public Teacher(String login, String password, String name, String gender, Date birthDate, Integer childNum, Department department, String post, BigDecimal salary, Role role) {
         super(login, password, name, gender, birthDate, childNum, role);
         this.department = department;
         this.post = post;
