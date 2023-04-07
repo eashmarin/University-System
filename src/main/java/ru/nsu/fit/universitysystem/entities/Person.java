@@ -21,7 +21,7 @@ public class Person {
     private Date birthDate;
     @Column(name = "child_num")
     private Integer childNum;
-    private Role role = Role.USER;
+    private String role = Role.USER.name();
 
     public Person() {}
 
@@ -32,7 +32,7 @@ public class Person {
         this.gender = gender;
         this.birthDate = birthDate;
         this.childNum = childNum;
-        this.role = role;
+        this.role = role.name();
     }
 
     public Long getId() {
@@ -116,10 +116,10 @@ public class Person {
     }
 
     public Role getRole() {
-        return role;
+        return Role.valueOf(role);
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.role = role.name();
     }
 }

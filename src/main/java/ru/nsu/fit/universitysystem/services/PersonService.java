@@ -1,6 +1,7 @@
 package ru.nsu.fit.universitysystem.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.universitysystem.entities.Person;
 import ru.nsu.fit.universitysystem.repositories.PersonRepository;
@@ -37,6 +38,10 @@ public class PersonService {
         editedPerson.setChildNum(person.getChildNum());
 
         return editedPerson;
+    }
+
+    public Optional<Person> getByLogin(String login) {
+        return repository.findByLogin(login);
     }
 
     public void delete(Long id) {
