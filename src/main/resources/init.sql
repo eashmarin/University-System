@@ -4,14 +4,22 @@ create table if not exists person
 (
     id         bigint generated always as identity
         primary key,
-    name       varchar not null,
-    gender     varchar not null
+    name       varchar                                   not null,
+    gender     varchar                                   not null
         constraint person_gender_check
             check (((gender)::text = 'male'::text) OR ((gender)::text = 'female'::text)),
-    birth_date date    not null,
-    child_num  integer not null
+    birth_date date                                      not null,
+    child_num  integer                                   not null
         constraint person_child_num_check
-            check (child_num >= 0)
+            check (child_num >= 0),
+    login      varchar                                   not null
+        unique
+        constraint person_login_check
+            check ((length((login)::text) >= 3) AND (length((login)::text) <= 16)),
+    password   varchar                                   not null,
+    role       varchar default 'user'::character varying not null
+        constraint person_role_check
+            check (((role)::text = 'user'::text) OR ((role)::text = 'admin'::text))
 );
 
 create table if not exists subject
@@ -103,7 +111,7 @@ create table if not exists student
     person_id       bigint  not null
         primary key
         references person,
-    group_id        bigint
+    group_id        bigint  not null
         references "group",
     education_level varchar not null
         constraint student_education_level_check
@@ -173,19 +181,3 @@ create table if not exists dissertation
             check (((type)::text = 'PhD'::text) OR ((type)::text = 'doctoral'::text)),
     date       date    not null
 );
-
-create function update_last_modified() returns trigger
-    language plpgsql
-as
-$$
-BEGIN
-    NEW.last_modified = NOW();
-    RETURN NEW;
-END;
-$$;
-
-create trigger update_last_modified
-    before update
-    on student
-    for each row
-execute procedure update_last_modified();

@@ -13,7 +13,8 @@ import java.util.Map;
 public class TestContainerDbContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static final PostgreSQLContainer<?> pgContainer = new PostgreSQLContainer<>("postgres:15-alpine")
-            .withExposedPorts(5432);
+            .withExposedPorts(5432)
+            .withInitScript("init.sql");
     //.withReuse(true)
     //.withInitScript("db/-db-init.sql")
 

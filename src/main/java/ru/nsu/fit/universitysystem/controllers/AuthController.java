@@ -1,5 +1,6 @@
 package ru.nsu.fit.universitysystem.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,8 +29,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody CredentialsDto credentialsDto) {
-        return authenticationService.authenticate(credentialsDto);
+    public ResponseEntity<String> login(@RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {
+        return authenticationService.logIn(credentialsDto, response);
         /*Cookie authCookie = new Cookie(CookieAuthenticationFilter.COOKIE_NAME, authenticationService.createToken(userDto));
         authCookie.setHttpOnly(true);
         authCookie.setSecure(true);
