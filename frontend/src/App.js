@@ -7,6 +7,7 @@ import NewStudentForm from "./components/form/NewStudentForm";
 import NewGroupForm from "./components/form/NewGroupForm";
 import React from "react";
 import EditStudentForm from "./components/form/EditStudentForm";
+import LoginForm from "./components/form/LoginForm";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                 <Header/>
             </div>
             <Routes>
+                <Route path="/login" element={<LoginForm/>}/>
                 <Route path="/students" element={<FacultiesList/>}/>
                 <Route path="/students/new" element={<NewStudentForm/>}/>
                 <Route path="/students/edit" element={<EditStudentForm/>}/>

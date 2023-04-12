@@ -2,12 +2,11 @@ package ru.nsu.fit.universitysystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.fit.universitysystem.entities.Group;
-import ru.nsu.fit.universitysystem.entities.Student;
-import ru.nsu.fit.universitysystem.services.GroupService;
+import ru.nsu.fit.universitysystem.model.entities.Group;
+import ru.nsu.fit.universitysystem.model.entities.Student;
+import ru.nsu.fit.universitysystem.model.services.GroupService;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController

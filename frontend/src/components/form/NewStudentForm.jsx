@@ -6,6 +6,9 @@ import TextFormElement from "../form/TextFormElement";
 import SelectFormElement from "../form/SelectFormElement";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Authenticator from "../Authenticator";
+import {genders} from "../enum/genders";
+import {educationLevels} from "../enum/educationLevels";
 
 function NewStudentForm() {
     const [faculties, setFaculties] = useState([]);
@@ -19,17 +22,6 @@ function NewStudentForm() {
     const [birthDate, setBirthDate] = useState(subYears(new Date(), 16))
     const [selectedEducationLevel, setSelectedEducationLevel] = useState("bachelor");
     const [selectedScholarship, setSelectedScholarship] = useState(0);
-
-    const genders = [
-        {"id": "1", "name": "male"},
-        {"id": "2", "name": "female"}
-    ];
-
-    const educationLevels = [
-        {"id": "1", "name": "bachelor"},
-        {"id": "2", "name": "master"},
-        {"id": "2", "name": "postgraduate"},
-    ];
 
     useEffect(() => {
         FacultyService.getFaculty("")
@@ -53,13 +45,13 @@ function NewStudentForm() {
     function sendStudentData(e) {
         const student = JSON.stringify({
             "name": selectedName,
-            "gender": selectedGender,
+            "gender": selectedGender.toUpperCase(),
             "birthDate": birthDate,
             "childNum": childNum,
             "group": {
                 "id": Number(selectedGroup)
             },
-            "educationLevel": selectedEducationLevel,
+            "educationLevel": selectedEducationLevel.toUpperCase(),
             "scholarship": selectedScholarship
         });
 
@@ -73,56 +65,59 @@ function NewStudentForm() {
     }
 
     return (
-        <div className="custom-form">
-            <Form>
-                <TextFormElement placeholder="Ivanov Ivan Ivanovich"
-                                 onChange={(e) => setSelectedName(e.currentTarget.value)}>
-                    Name
-                </TextFormElement>
+        <>
+            <Authenticator></Authenticator>
+            <div className="custom-form">
+                <Form>
+                    <TextFormElement placeholder="Ivanov Ivan Ivanovich"
+                                     onChange={(e) => setSelectedName(e.currentTarget.value)}>
+                        Name
+                    </TextFormElement>
 
-                <SelectFormElement elements={genders}
-                                   onChange={(e) => setSelectedGender(e.currentTarget.options[e.currentTarget.selectedIndex].value)}>
-                    Gender
-                </SelectFormElement>
+                    <SelectFormElement elements={genders}
+                                       onChange={(e) => setSelectedGender(e.currentTarget.options[e.currentTarget.selectedIndex].text)}>
+                        Gender
+                    </SelectFormElement>
 
-                <FormGroup>
-                    <Form.Label>Birth Date</Form.Label>
-                    <DatePicker className="form-select"
-                                showIcon
-                                selected={birthDate}
-                                onChange={(date) => setBirthDate(date)}
-                                maxDate={subYears(new Date(), 16)}
-                    />
+                    <FormGroup>
+                        <Form.Label>Birth Date</Form.Label>
+                        <DatePicker className="form-select"
+                                    showIcon
+                                    selected={birthDate}
+                                    onChange={(date) => setBirthDate(date)}
+                                    maxDate={subYears(new Date(), 16)}
+                        />
 
-                </FormGroup>
+                    </FormGroup>
 
-                <TextFormElement placeholder="0"
-                                 onChange={(e) => setChildNum(e.currentTarget.value)}>
-                    Children number
-                </TextFormElement>
+                    <TextFormElement placeholder="0"
+                                     onChange={(e) => setChildNum(e.currentTarget.value)}>
+                        Children number
+                    </TextFormElement>
 
-                <SelectFormElement elements={faculties}
-                                   onChange={(e) => setSelectedFaculty(e.currentTarget.options[e.currentTarget.selectedIndex].id)}>
-                    Faculty
-                </SelectFormElement>
+                    <SelectFormElement elements={faculties}
+                                       onChange={(e) => setSelectedFaculty(e.currentTarget.options[e.currentTarget.selectedIndex].id)}>
+                        Faculty
+                    </SelectFormElement>
 
-                <SelectFormElement elements={groups}
-                                   onChange={(e) => setSelectedGroup(e.currentTarget.options[e.currentTarget.selectedIndex].id)}>
-                    Group
-                </SelectFormElement>
+                    <SelectFormElement elements={groups}
+                                       onChange={(e) => setSelectedGroup(e.currentTarget.options[e.currentTarget.selectedIndex].id)}>
+                        Group
+                    </SelectFormElement>
 
-                <SelectFormElement elements={educationLevels}
-                                   onChange={(e) => setSelectedEducationLevel(e.currentTarget.options[e.currentTarget.selectedIndex].value)}>
-                    Education Levels
-                </SelectFormElement>
-                <TextFormElement placeholder="0" onChange={(e) => setSelectedScholarship(e.currentTarget.value)}>
-                    Scholarship
-                </TextFormElement>
+                    <SelectFormElement elements={educationLevels}
+                                       onChange={(e) => setSelectedEducationLevel(e.currentTarget.options[e.currentTarget.selectedIndex].text)}>
+                        Education Levels
+                    </SelectFormElement>
+                    <TextFormElement placeholder="0" onChange={(e) => setSelectedScholarship(e.currentTarget.value)}>
+                        Scholarship
+                    </TextFormElement>
 
-                <Button className="d-block w-75 m-auto mt-3 mb-3" variant="outline-dark"
-                        onClick={(e) => sendStudentData(e)}>Add</Button>
-            </Form>
-        </div>
+                    <Button className="d-block w-75 m-auto mt-3 mb-3" variant="outline-dark"
+                            onClick={(e) => sendStudentData(e)}>Add</Button>
+                </Form>
+            </div>
+        </>
     );
 };
 

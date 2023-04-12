@@ -6,6 +6,7 @@ import TextFormElement from "./TextFormElement";
 import StudentService from "../../API/StudentService";
 import GroupService from "../../API/GroupService";
 import ResponseNotification from "../ResponseNotification";
+import Authenticator from "../Authenticator";
 
 const NewGroupForm = () => {
     const [faculties, setFaculties] = useState([]);
@@ -31,14 +32,17 @@ const NewGroupForm = () => {
             "course": selectedCourse
         });
 
-        const responseStatus = await GroupService.addGroup(group);
-        console.log(responseStatus);
-        setServerResponse(responseStatus)
+        GroupService.addGroup(group).then((resp) => {
+            console.log(resp.status);
+            setServerResponse(resp.status)
+        });
+
     }
 
     return (
         <>
             <div className="custom-form">
+                <Authenticator></Authenticator>
                 <Form>
                     <TextFormElement onChange={(e) => setSelectedName(e.currentTarget.value)}>
                         Name

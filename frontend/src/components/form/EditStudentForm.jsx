@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import GroupService from "../../API/GroupService";
 import {genders} from "../enum/genders";
 import {educationLevels} from "../enum/educationLevels";
+import Authenticator from "../Authenticator";
 
 function EditStudentForm() {
     const [faculties, setFaculties] = useState([]);
@@ -91,6 +92,7 @@ function EditStudentForm() {
 
     return (
         <>
+            <Authenticator></Authenticator>
             <div className="custom-form ">
                 <Form>
                     <SelectFormElement elements={faculties}

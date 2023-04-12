@@ -4,6 +4,7 @@ import {Accordion} from "react-bootstrap";
 import FacultyService from "../API/FacultyService";
 import {useFetching} from "../hooks/useFetching";
 import Spinner from 'react-bootstrap/Spinner'
+import Authenticator from "./Authenticator";
 
 function FacultiesList() {
     const [faculties, setFaculties] = useState();
@@ -18,6 +19,7 @@ function FacultiesList() {
 
     return (
         <Accordion className="w-50 mt-3 m-auto justify-content-center">
+            <Authenticator></Authenticator>
             {areFacultiesLoading &&
                 <div className="d-flex justify-content-center">
                     <Spinner animation="border" role="status"></Spinner>

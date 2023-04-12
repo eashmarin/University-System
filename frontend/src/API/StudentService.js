@@ -3,6 +3,7 @@ export default class StudentService {
         const url = "http://localhost:8080/api/students";
         const response =  await fetch(url, {
             method: "POST",
+            credentials: "include",
             headers: {'Content-Type': 'application/json'},
             body: student
         });

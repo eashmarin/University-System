@@ -2,8 +2,8 @@ package ru.nsu.fit.universitysystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.fit.universitysystem.entities.Person;
-import ru.nsu.fit.universitysystem.services.PersonService;
+import ru.nsu.fit.universitysystem.model.entities.Person;
+import ru.nsu.fit.universitysystem.model.services.PersonService;
 
 import java.util.Optional;
 
