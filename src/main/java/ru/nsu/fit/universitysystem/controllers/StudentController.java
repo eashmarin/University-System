@@ -24,7 +24,6 @@ public class StudentController {
 
     @PostMapping
     public Student add(@RequestBody Student student) {
-        System.out.println(student);
         return service.add(student);
     }
 

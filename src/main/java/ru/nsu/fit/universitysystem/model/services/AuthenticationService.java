@@ -25,13 +25,13 @@ public class AuthenticationService {
         this.tokenUtil = tokenUtil;
     }
 
-    public ResponseEntity<String> authenticate(String token) {
+    public ResponseEntity<Person> authenticate(String token) {
         String userLogin = tokenUtil.getLoginFromToken(token);
         if (userLogin == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(userLogin);
+        return ResponseEntity.status(HttpStatus.OK).body(personService.getByLogin(userLogin).get());
     }
 
     public ResponseEntity<String> logIn(CredentialsDto credentialsDto, HttpServletResponse response) {

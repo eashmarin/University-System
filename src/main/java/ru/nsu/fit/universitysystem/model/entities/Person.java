@@ -1,6 +1,8 @@
 package ru.nsu.fit.universitysystem.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.universitysystem.model.enums.Gender;
 import ru.nsu.fit.universitysystem.model.enums.Role;
@@ -26,7 +28,7 @@ public class Person {
     @Column(name = "child_num")
     private Integer childNum;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.USER;
 
     public Person() {}
 

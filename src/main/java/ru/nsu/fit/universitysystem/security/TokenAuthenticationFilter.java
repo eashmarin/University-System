@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.nsu.fit.universitysystem.model.entities.Person;
+import ru.nsu.fit.universitysystem.model.enums.Role;
 import ru.nsu.fit.universitysystem.model.services.AuthenticationService;
 import ru.nsu.fit.universitysystem.model.utils.TokenUtil;
 
@@ -53,12 +55,15 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 .findFirst();
 
         if (tokenCookie.isPresent()) {
-            String login = authenticationService.authenticate(tokenCookie.get().getValue()).getBody();
-            request.setAttribute("login", login);
+            Person person = authenticationService.authenticate(tokenCookie.get().getValue()).getBody();
+            if (request.getMethod().equals(HttpMethod.POST.toString()) && person.getRole().equals(Role.USER)) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
+            request.setAttribute("login", person.getLogin());
         }
 
         if (request.getAttribute("login") == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN );
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
         filterChain.doFilter(request, response);
