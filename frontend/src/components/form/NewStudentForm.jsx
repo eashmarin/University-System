@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, FormGroup} from "react-bootstrap";
+import {Alert, Button, Form, FormGroup} from "react-bootstrap";
 import FacultyService from "../../API/FacultyService";
 import StudentService from "../../API/StudentService";
 import TextFormElement from "../form/TextFormElement";
@@ -23,6 +23,8 @@ function NewStudentForm() {
     const [selectedEducationLevel, setSelectedEducationLevel] = useState("bachelor");
     const [selectedScholarship, setSelectedScholarship] = useState(0);
 
+    const [response, setResponse] = useState(null);
+
     useEffect(() => {
         FacultyService.getFaculty("")
             .then(response => {
@@ -41,6 +43,9 @@ function NewStudentForm() {
 
     }, [selectedFaculty]);
 
+    /*useEffect(() => {
+    }, [response]);*/
+
 
     function sendStudentData(e) {
         const student = JSON.stringify({
@@ -57,7 +62,9 @@ function NewStudentForm() {
 
         console.log(student);
 
-        StudentService.addStudent(student)
+        StudentService.addStudent(student).then((resp) => {
+            setResponse(resp);
+        });
     }
 
     function subYears(date, number) {

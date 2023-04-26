@@ -7,5 +7,6 @@ export default class StudentService {
             headers: {'Content-Type': 'application/json'},
             body: student
         });
+        return response;
     }
 }
