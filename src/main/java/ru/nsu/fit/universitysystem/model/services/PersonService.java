@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.universitysystem.model.entities.Person;
 import ru.nsu.fit.universitysystem.model.repositories.PersonRepository;
+import ru.nsu.fit.universitysystem.model.repositories.custom.CustomPersonRepository;
 
 import java.util.Optional;
 
@@ -11,9 +12,12 @@ import java.util.Optional;
 public class PersonService {
     private final PersonRepository repository;
 
+    private final CustomPersonRepository customRepository;
+
     @Autowired
-    public PersonService(PersonRepository repository) {
+    public PersonService(PersonRepository repository, CustomPersonRepository customRepository) {
         this.repository = repository;
+        this.customRepository = customRepository;
     }
 
     public Iterable<Person> getAll() {
@@ -40,7 +44,7 @@ public class PersonService {
     }
 
     public Optional<Person> getByLogin(String login) {
-        return repository.findByLogin(login);
+        return Optional.ofNullable(customRepository.findByLogin(login));
     }
 
     public void delete(Long id) {

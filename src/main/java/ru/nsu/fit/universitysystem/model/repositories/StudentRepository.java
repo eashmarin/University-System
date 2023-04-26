@@ -6,4 +6,5 @@ import ru.nsu.fit.universitysystem.model.entities.Student;
 
 @Repository
 public interface StudentRepository extends CrudRepository<Student, Long> {
+    boolean existsByLogin(String login);
 }

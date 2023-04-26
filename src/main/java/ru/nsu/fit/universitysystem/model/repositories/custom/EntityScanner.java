@@ -2,7 +2,6 @@ package ru.nsu.fit.universitysystem.model.repositories.custom;
 
 import jakarta.persistence.Entity;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-public class PackageScanner {
+public class EntityScanner {
     private final List<? extends Class<?>> entityClasses = scanEntityClasses();
 
     private List<? extends Class<?>> scanEntityClasses() {
@@ -33,20 +32,14 @@ public class PackageScanner {
     }
 
     public boolean entityContainsField(String entityName, String fieldName) {
-        Class<?> requiredEntityClass = entityClasses.stream()
-                .filter(entityClass -> entityClass.getSimpleName().equals(entityName))
-                .findAny()
-                .orElseThrow();
+        Class<?> requiredEntityClass = getEntityClass(entityName);
         return Arrays.stream(requiredEntityClass.getDeclaredFields())
                 .anyMatch(field -> field.getName().equals(fieldName));
     }
 
     public Field[] getEntityFields(String entityName) {
-        return entityClasses.stream()
-                .filter(entityClass -> entityClass.getSimpleName().equals(entityName))
-                .map(Class::getDeclaredFields)
-                .findFirst()
-                .orElseThrow();
+        Class<?> requiredEntityClass = getEntityClass(entityName);
+        return requiredEntityClass.getDeclaredFields();
     }
 
     public Class<?> getEntityClass(String entityName) {

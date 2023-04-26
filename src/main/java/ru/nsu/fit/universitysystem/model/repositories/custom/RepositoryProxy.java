@@ -3,8 +3,6 @@ package ru.nsu.fit.universitysystem.model.repositories.custom;
 import org.postgresql.jdbc.PgResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -15,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Component
-public class MethodHandler implements InvocationHandler {
-    private final PackageScanner packageScanner;
+public class RepositoryProxy implements InvocationHandler {
+    @Autowired
+    private EntityScanner entityScanner;
 
     @Value("${spring.datasource.url}")
     private String url;
@@ -28,43 +26,44 @@ public class MethodHandler implements InvocationHandler {
     @Value("${spring.datasource.password}")
     private String password;
 
-    @Autowired
-    public MethodHandler(PackageScanner packageScanner) {
-        this.packageScanner = packageScanner;
-    }
-
-
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String methodName = method.getName();
+
+        if ("hashCode".equals(methodName)) {
+            return hashCode();
+        }
+
         String entityName = getEntityName(method.getDeclaringClass().getSimpleName());
 
         boolean isCollectionExpected = Collection.class.isAssignableFrom(method.getReturnType());
 
         String selectedColumn = parseSelectedColumn(methodName).toLowerCase();
 
-        if (packageScanner.entityContainsField(entityName, selectedColumn)) {
-            Class.forName("org.postgresql.Driver");
-
-            Connection connection = DriverManager.getConnection(url, username, password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + "public." + entityName.toLowerCase() + " WHERE " + selectedColumn + " = '" + args[0].toString() + "'");
-
-            Object requestResult = parseResultSet(resultSet, entityName, isCollectionExpected);
-
-            resultSet.close();
-            statement.close();
-            connection.close();
-
-            return requestResult;
+        if (!entityScanner.entityContainsField(entityName, selectedColumn)) {
+            return null;
         }
 
-        return null;
+        Class.forName("org.postgresql.Driver");
+
+        Connection connection = DriverManager.getConnection(url, username, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT * FROM " + "public." + entityName.toLowerCase()
+                        + " WHERE " + selectedColumn + " = '" + args[0].toString() + "'");
+
+        Object requestResult = parseResultSet(resultSet, entityName, isCollectionExpected);
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return requestResult;
     }
 
     private Object parseResultSet(ResultSet resultSet, String entityName, boolean isCollectionExpected) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        Class<?> entityClass = packageScanner.getEntityClass(entityName);
-        Field[] fields = packageScanner.getEntityFields(entityName);
+        Class<?> entityClass = entityScanner.getEntityClass(entityName);
+        Field[] fields = entityScanner.getEntityFields(entityName);
         Class<?>[] fieldTypes = new Class<?>[fields.length];
         for (int i = 0; i < fields.length; i++) {
             fieldTypes[i] = fields[i].getType();
@@ -114,6 +113,6 @@ public class MethodHandler implements InvocationHandler {
     }
 
     private String getEntityName(String methodName) {
-        return methodName.substring(0, methodName.indexOf("Repository"));
+        return methodName.substring(methodName.indexOf("Custom") + "Custom".length(), methodName.indexOf("Repository"));
     }
 }
